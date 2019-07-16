@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue0716</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+    .one{
+        display: inline-block;
+        width: 70px;
+        height: 25px;
+        text-align: center;
+        border: 1px solid black;
+        cursor: pointer;
+        margin: 10px;
+    }
+    .active{
+        color: crimson;
+        border: 1px solid crimson;
+    }
+</style>
+<body>
+    <div id="app">
+        <ul id="uls">
+            <li :class="lis" @click="clicks" v-for="val in nums">{{val}}</li>
+            <!-- <li :class="lis" @click="clicks">2</li>
+            <li :class="lis" @click="clicks">3</li>
+            <li :class="lis" @click="clicks">4</li>
+            <li :class="lis" @click="clicks">5</li> -->
+        </ul>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+           lis:"one",
+           nums:[1,2,3,4,5]
+        },
+        methods: {
+            clicks(event){
+                console.log(document.getElementById("uls").children);
+                for (let i = 0; i < document.getElementById("uls").children.length; i++) {
+                    document.getElementById("uls").children[i].className="one";
+                }
+                event.target.className+=" active";
+              
+                // if(event.target.className=="one active"){
+                //     event.target.className="one";
+                // }else{
+                //     event.target.className+=" active";
+                // } 
+            }   
+        }
+    })
+</script>
+</html>
