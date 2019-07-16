@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue0716</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+    .divXY {
+        width: 600px;
+        height: 600px;
+        border: 1px solid crimson;
+       
+    }
+
+    .divXY-child {
+        width: 300px;
+        height: 300px;
+        border: 1px solid crimson;
+      
+    }
+
+    /*上下左右居中    https://blog.csdn.net/qq_36658051/article/details/81985024   */
+    /*
+    1.父：相对定位   子：绝对定位  margin: auto;top: 0; left: 0; bottom: 0; right: 0;
+    2.子：相对定位  left top 50%  margin同方向负自身宽或高一半
+    3.子：相对定位  left top 50%  位移-50% transform的translate(-50%, -50%)
+    4.父： display: flex;flex-direction: row;justify-content: center;align-items: center;（父元素里所有元素都会上下左右居中）
+    */
+</style>
+
+<body>
+    <div id="vue0716">
+        我是{{name}}，我{{age}}岁
+        <p>单击
+            <button @click="addage(1)">加一岁</button>
+            <button @click="subtract(1)">减一岁</button>
+        </p>
+        <p>双击
+            <button @dblclick="addage(10)">加十岁</button>
+            <button @dblclick="subtract(10)">减十岁</button>
+        </p>
+        <hr>
+        <div class="divXY" @mousemove="getXY">
+            {{X}},{{Y}}
+            <div class="divXY-child" @mousemove.stop="">
+                阻止冒泡 XY不变
+                <p>
+                    <button @click.once="getXYZeroing">归零XY只能用一次</button>
+                </p>
+            </div>
+        </div>
+        <hr>
+        键盘事件(回车键)
+        <input ref="enters" type="text" @keyup.enter="keyupChangeEnters">
+        {{enterText}}
+        <br>
+        键盘事件(Alt+回车键)
+        <input ref="alts" type="text" @keyup.alt.enter="keyupChangeAlt">
+        {{altText}}
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#vue0716",
+        data: {
+            name: "MX",
+            age: 20,
+            X: 0,
+            Y: 0,
+            enterText:"",
+            altText:""
+        },
+        methods: {
+            addage(ages) {
+                this.age += ages;
+            },
+            subtract(ages) {
+                this.age -= ages;
+            },
+            getXY(event) {
+                this.X = event.offsetX;
+                this.Y = event.offsetY;
+            },
+            stopgetXY(event) {
+                event.stopPropagation();
+            },
+            getXYZeroing(){
+                this.X=this.Y=0;
+            },
+            keyupChangeEnters(){
+                this.enterText=this.$refs.enters.value;
+                console.log("键盘事件触发(回车键)")
+            },
+            keyupChangeAlt(){
+                this.altText=this.$refs.alts.value;
+                console.log("键盘事件触发(Alt+回车键)")
+            }
+        }
+    })
+</script>
+
+</html>
