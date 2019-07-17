@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue0716</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style></style>
+
+<body>
+    <div id="app">
+        <div :style="{ fontSize: childFontSize + 'px' }">
+            <button-one v-for="data in datas" :key="data.id" :post="data" @biger="biger_parent"></button-one>
+        </div>
+    </div>
+</body>
+<script>
+    Vue.component('button-one', {
+        data: function () {
+            return {
+
+            }
+        },
+        props: ["post"],
+        template: `
+            <div class='button-one'>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.one }}</p>
+                <p>{{ post.two }}</p>
+                <p>{{ post.three }}</p>
+                <button @click="$emit('biger',2)">
+                    变大
+                </button>
+            </div>
+        `
+    })
+
+    new Vue({
+        el: "#app",
+        data: {
+            datas: [
+                { id: 1, title: "只有小鹿不会变", one: "只有one", two: "只有two", three: "只有three" },
+                { id: 2, title: "想办法怼她一炮", one: "想办one", two: "想办two", three: "想办three" },
+                { id: 3, title: "别说蝴蝶不送我", one: "别说one", two: "别说two", three: "别说three" }
+            ],
+            childFontSize: 15
+        },
+        methods: {
+            biger_parent(nums){
+                this.childFontSize+=nums;
+            }
+        },
+    })
+
+</script>
+
+</html>

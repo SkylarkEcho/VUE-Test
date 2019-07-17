@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style></style>
+<body>
+    <div id="app">
+        <!-- <input type="text" :value="name" @input="name = $event.target.value"> -->
+        {{name}}
+        <shows v-model="name"></shows>
+    </div>
+</body>
+<script>
+    Vue.component("shows",{
+        template:`
+            <div>
+                <input type="text" :value='chlidValue' @input='oninput'/>
+            </div>
+        `,
+        props:["value"],
+        data() {
+            return {
+                chlidValue:this.value
+            }
+        },
+        methods:{
+            oninput(e){
+                this.chlidValue = e.target.value;
+                this.$emit('input', e.target.value)
+            }
+        }
+    })
+
+
+    new Vue({
+        el:"#app",
+        data:{
+            name:"ZMX"
+        }
+    })
+</script>
+</html>

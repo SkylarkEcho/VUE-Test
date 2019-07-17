@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style></style>
+<body>
+    <div id="app">
+        <child>
+                <h5 slot="one">one</h5>
+            <h1 slot="two">two</h1>
+           
+        </child>
+    </div>
+</body>
+<script>
+    Vue.component("child",{
+        data() {
+            return {
+                childname:"Tell Me If You Wanna Go Home"
+            }
+        },
+        methods: {
+           
+        },
+        template:`
+            <p>
+                <slot name="one"></slot>
+                <slot name="two"></slot>
+            </p>
+        `
+    })
+
+    new Vue({
+        el:"#app",
+        data:{
+            name:"我是mx"
+        },
+        methods:{
+          
+        }
+    })
+</script>
+</html>
